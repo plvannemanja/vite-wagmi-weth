@@ -22,9 +22,9 @@ const SwapInput: React.FC<SwapInputProps> = ({
   max,
 })  => {
   return (
-    <HStack w="full" bgColor="gray.100" rounded="2xl" px="5" py="1" className="swapInputContainer">
+    <HStack w="full" bgColor="gray.100" rounded="2xl" px="5" py="3" className="swapInputContainer">
       <div className="tokenInfo">
-        <div className="">
+        <div>
           {
             type === "eth" ? (
               <TokenETC size={18} variant="branded" />

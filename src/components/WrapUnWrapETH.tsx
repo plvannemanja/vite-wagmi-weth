@@ -2,23 +2,48 @@ import {
   Button,
   Flex,
   Spinner,
-  useToast,
 } from "@chakra-ui/react"
 import React, { useState } from "react"
-import { useAccount, useBalance } from "wagmi"
+import { useAccount, useBalance, useWriteContract } from "wagmi"
 import SwapInput from "./SwapInput";
 import Navbar from "./Navbar";
+import { useWaitForTransactionReceipt } from "wagmi";
+import { parseAbi, parseEther } from "viem";
 
 const WETH_CONTRACT_ADDRESS = '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2';
 
 const WrapUnwrapETH: React.FC = () => {
-  const toast = useToast();
   const { address } = useAccount();
   const [amount, setAmount] = useState<string>("0");
   const [currentFrom, setCurrentFrom] = useState<string>("eth");
-  const [loading, setLoading] = useState<boolean>(false);
   const { data: ethBalance } = useBalance({ address });
   const { data: wethBalance } = useBalance({ address, token: WETH_CONTRACT_ADDRESS });
+
+  const { data: hash, error, isPending, writeContract } = useWriteContract()
+
+  const executeSwap = async () => {
+    if (currentFrom === "eth") {
+      writeContract({
+        address: WETH_CONTRACT_ADDRESS,
+        abi: parseAbi(["function deposit() public payable"]),
+        functionName: 'deposit',
+        value: parseEther(amount || '0')
+      })
+    } else {
+      writeContract({
+        address: WETH_CONTRACT_ADDRESS,
+        abi: parseAbi(["function withdraw(uint wad) public"]),
+        functionName: 'withdraw',
+        args: [parseEther(amount || '0')]
+      })
+    }
+  };
+
+  const { isLoading: isConfirming, isSuccess: isConfirmed } =
+  useWaitForTransactionReceipt({
+    hash,
+  })
+
   return (
     <Flex
       direction="column"
@@ -71,14 +96,14 @@ const WrapUnwrapETH: React.FC = () => {
           />
       </Flex>
       <Button
-        onClick={()=> {}}
+        onClick={()=> {executeSwap()}}
         py="7"
         fontSize="2xl"
         colorScheme="twitter"
         rounded="xl"
-        isDisabled={loading}
+        isDisabled={isConfirming || isPending}
       >
-        {loading ? <Spinner /> : "Confirm"}
+        {(isConfirming || isPending) ? <Spinner /> : "Confirm"}
       </Button>
     </Flex>
   )

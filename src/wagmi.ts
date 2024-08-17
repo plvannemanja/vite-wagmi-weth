@@ -1,13 +1,13 @@
 import { http, createConfig } from 'wagmi'
 import { createWeb3Modal } from '@web3modal/wagmi/react'
-import { mainnet, sepolia } from 'wagmi/chains'
 import { coinbaseWallet, injected, walletConnect, metaMask } from 'wagmi/connectors'
+import { virtual_mainnet } from './tenderly.config';
 
 const projectId = import.meta.env.VITE_WC_PROJECT_ID;
-const tenderlyKeyMainNet = import.meta.env.VITE_WC_TENDERLY_NODE_ACCESS_KEY_MAINNET;
+const tenderlyAdminRPCURL = import.meta.env.VITE_WC_TENDERLY_ADMIN_RPC_URL;
 
 export const config = createConfig({
-  chains: [mainnet, sepolia],
+  chains: [virtual_mainnet],
   connectors: [
     injected(),
     metaMask(),
@@ -15,9 +15,7 @@ export const config = createConfig({
     walletConnect({ projectId }),
   ],
   transports: {
-    [mainnet.id]: http(`https://mainnet.gateway.tenderly.co/${tenderlyKeyMainNet}`),
-    [sepolia.id]: http(`https://mainnet.gateway.tenderly.co/${tenderlyKeyMainNet}`),
- 
+    [virtual_mainnet.id]: http(tenderlyAdminRPCURL)
   },
 })
 
