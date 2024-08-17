@@ -4,6 +4,7 @@ import { mainnet, sepolia } from 'wagmi/chains'
 import { coinbaseWallet, injected, walletConnect, metaMask } from 'wagmi/connectors'
 
 const projectId = import.meta.env.VITE_WC_PROJECT_ID;
+const tenderlyKeyMainNet = import.meta.env.VITE_WC_TENDERLY_NODE_ACCESS_KEY_MAINNET;
 
 export const config = createConfig({
   chains: [mainnet, sepolia],
@@ -14,8 +15,9 @@ export const config = createConfig({
     walletConnect({ projectId }),
   ],
   transports: {
-    [mainnet.id]: http(),
-    [sepolia.id]: http(),
+    [mainnet.id]: http(`https://mainnet.gateway.tenderly.co/${tenderlyKeyMainNet}`),
+    [sepolia.id]: http(`https://mainnet.gateway.tenderly.co/${tenderlyKeyMainNet}`),
+ 
   },
 })
 

@@ -1,6 +1,6 @@
 :root {
-  background-color: #181818;
-  color: rgba(255, 255, 255, 0.87);
+  background-color: #070707;
+  color: #e7e8e8;
   color-scheme: light dark;
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   font-synthesis: none;
@@ -11,11 +11,59 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+
+  .swapInputContainer {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .tokenInfo {
+    display: flex;
+    width: 100%;
+    max-width: 100px;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+  }
+
+  .wrap-btn {
+    z-index: 2;
+    margin: -28px auto;
+    border: 2px solid rgb(216, 216, 216);
+  }
+  
+  .tokenInfo div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+  }
+  
+  .swapInputContainer input {
+    /* background-color: #111; */
+    border: 1px solid #f3f3f3;
+    border-radius: 15px;
+    padding: 10px 20px;
+  }
+  
+  .swapCard {
+    position: relative;
+  }
+  
+  .switchButton {
+    margin-left: -110px;
+    margin-top: -10px;
+  }
 }
 
 @media (prefers-color-scheme: light) {
   :root {
-    background-color: #f8f8f8;
-    color: #181818;
+    background-color: #e7e8e8;
+    color: #070707;
   }
 }
