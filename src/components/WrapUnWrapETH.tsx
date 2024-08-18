@@ -8,11 +8,11 @@ import React, { useEffect, useState } from "react"
 import { BaseError, useAccount, useBalance, useWriteContract } from "wagmi"
 import SwapInput from "./SwapInput";
 import Navbar from "./Navbar";
-import { parseAbi, parseEther, TransactionExecutionError } from "viem";
+import { parseAbi, parseEther } from "viem";
 import { useBlockNumber } from "wagmi";
 import { useSwapAmount } from "../context/SwapAmountContext";
 import { config } from "../wagmi";
-import { waitForTransactionReceipt } from "wagmi/actions";
+import { waitForTransactionReceipt, WriteContractErrorType } from "wagmi/actions";
 
 const WETH_CONTRACT_ADDRESS = '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2';
 
@@ -60,10 +60,10 @@ const WrapUnwrapETH: React.FC = () => {
     }
   }
 
-  const handleTransactionError = async (txError: TransactionExecutionError) => {
+  const handleTransactionError = async (txError: WriteContractErrorType) => {
     toast({
       title: currentFrom === "eth" ? "Wrap ETH" : "Unwrap WETH",
-      description: txError?.shortMessage,
+      description: (txError as BaseError).shortMessage || txError?.message,
       status: "error",
       position: "bottom-right", 
     })
