@@ -2,55 +2,102 @@ import {
   Button,
   Flex,
   Spinner,
+  useToast,
 } from "@chakra-ui/react"
 import React, { useEffect, useState } from "react"
 import { BaseError, useAccount, useBalance, useWriteContract } from "wagmi"
 import SwapInput from "./SwapInput";
 import Navbar from "./Navbar";
-import { useWaitForTransactionReceipt } from "wagmi";
-import { parseAbi, parseEther } from "viem";
+import { parseAbi, parseEther, TransactionExecutionError } from "viem";
 import { useBlockNumber } from "wagmi";
 import { useSwapAmount } from "../context/SwapAmountContext";
+import { config } from "../wagmi";
+import { waitForTransactionReceipt } from "wagmi/actions";
 
 const WETH_CONTRACT_ADDRESS = '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2';
 
 const WrapUnwrapETH: React.FC = () => {
+  const toast = useToast();
   const { address } = useAccount();
   const { amount } = useSwapAmount();
-  const [currentFrom, setCurrentFrom] = useState<string>("eth");
+  const [currentFrom, setCurrentFrom] = useState<"eth" | "weth">("eth");
   const { data: ethBalance, refetch: ethRefetch } = useBalance({ address });
   const { data: wethBalance, refetch: wethRefetch } = useBalance({ address, token: WETH_CONTRACT_ADDRESS });
   const { data: blockNumber } = useBlockNumber({ watch: true });
 
-  const { data: hash, error, isPending, writeContract } = useWriteContract()
+  const [isConfirming, setIsConfirming] = useState<boolean>(false);
+  const { isPending, writeContract, error } = useWriteContract()
 
   useEffect(() => {
     ethRefetch();
     wethRefetch();
   }, [blockNumber]);
 
-  const executeSwap = async () => {
-    if (currentFrom === "eth") {
-      writeContract({
-        address: WETH_CONTRACT_ADDRESS,
-        abi: parseAbi(["function deposit() public payable"]),
-        functionName: 'deposit',
-        value: parseEther(amount || '0')
+  const handleTransactionSubmitted = async (txHash: string) => {
+    setIsConfirming(true);
+    const transactionReceipt = await waitForTransactionReceipt(config, {
+      hash: txHash as `0x${string}`,
+    });
+
+    setIsConfirming(false);
+    // at this point the tx was mined
+
+    if (transactionReceipt.status === "success") {
+      // execute your logic here
+      toast({
+        title: currentFrom === "eth" ? "Wrap ETH" : "Unwrap WETH",
+        description: "Successfully swapped.",
+        status: "success",
+        position: "bottom-right", 
       })
     } else {
-      writeContract({
-        address: WETH_CONTRACT_ADDRESS,
-        abi: parseAbi(["function withdraw(uint wad) public"]),
-        functionName: 'withdraw',
-        args: [parseEther(amount || '0')]
+      toast({
+        title: currentFrom === "eth" ? "Wrap ETH" : "Unwrap WETH",
+        description: (error as BaseError).shortMessage || error?.message,
+        status: "error",
+        position: "bottom-right", 
       })
     }
-  };
+  }
 
-  const { isLoading: isConfirming, isSuccess: isConfirmed } =
-  useWaitForTransactionReceipt({
-    hash
-  })
+  const handleTransactionError = async (txError: TransactionExecutionError) => {
+    toast({
+      title: currentFrom === "eth" ? "Wrap ETH" : "Unwrap WETH",
+      description: txError?.shortMessage,
+      status: "error",
+      position: "bottom-right", 
+    })
+  }
+
+  const executeSwap = async () => {
+    if (currentFrom === "eth") {
+      writeContract(
+        {
+          address: WETH_CONTRACT_ADDRESS,
+          abi: parseAbi(["function deposit() public payable"]),
+          functionName: 'deposit',
+          value: parseEther(amount || '0')
+        }, 
+        {
+          onSuccess: handleTransactionSubmitted,
+          onError: handleTransactionError,
+        }    
+      )
+    } else {
+      writeContract(
+        {
+          address: WETH_CONTRACT_ADDRESS,
+          abi: parseAbi(["function withdraw(uint wad) public"]),
+          functionName: 'withdraw',
+          args: [parseEther(amount || '0')]
+        },
+        {
+          onSuccess: handleTransactionSubmitted,
+          onError: handleTransactionError,
+        }
+      )
+    }
+  };
 
   return (
     <Flex
@@ -109,11 +156,6 @@ const WrapUnwrapETH: React.FC = () => {
       >
         {(isConfirming || isPending) ? <Spinner /> : "Confirm"}
       </Button>
-      {isConfirming && <div>Waiting for confirmation...</div>} 
-      {isConfirmed && <div>Transaction confirmed.</div>} 
-      {error && (
-        <div>Error: {(error as BaseError).shortMessage || error.message}</div>
-      )}
     </Flex>
   )
 }
