@@ -9,10 +9,10 @@ const tenderlyAdminRPCURL = import.meta.env.VITE_WC_TENDERLY_ADMIN_RPC_URL;
 export const config = createConfig({
   chains: [virtual_mainnet],
   connectors: [
-    injected(),
+    // injected(),
     metaMask(),
-    coinbaseWallet(),
-    walletConnect({ projectId }),
+    // coinbaseWallet(),
+    // walletConnect({ projectId }),
   ],
   transports: {
     [virtual_mainnet.id]: http(tenderlyAdminRPCURL)
