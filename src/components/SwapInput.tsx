@@ -2,21 +2,14 @@ import { Button, HStack, Input } from "@chakra-ui/react";
 import { TokenETC, TokenETH } from "@web3icons/react";
 import React from "react";
 import { useSwapAmount } from "../context/SwapAmountContext";
-
-type SwapInputProps = {
-  type: "eth" | "weth";
-  tokenSymbol?: string;
-  tokenBalance: string
-  current: string;
-  max?: string;
-};
+import { SwapInputProps } from "../types";
 
 const SwapInput: React.FC<SwapInputProps> = ({
   type,
   tokenSymbol,
   tokenBalance,
   current,
-  max,
+  max
 })  => {
   const { amount, setAmount } = useSwapAmount();
   return (
