@@ -73,8 +73,6 @@ const WrapUnwrapETH: React.FC = () => {
           current={currentFrom}
           type="eth"
           max={ethBalance?.formatted}
-          value={amount}
-          setValue={setAmount}
           tokenSymbol="ETH"
           tokenBalance={ethBalance?.formatted || "0"}
         />
@@ -96,8 +94,6 @@ const WrapUnwrapETH: React.FC = () => {
           current={currentFrom}
           type="weth"
           max={wethBalance?.formatted}
-          value={amount}
-          setValue={setAmount}
           tokenSymbol="WETH"
           tokenBalance={wethBalance?.formatted || "0"}
           />

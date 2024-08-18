@@ -1,6 +1,7 @@
 import { useAccount } from 'wagmi'
 import WrapUnwrapETH from './components/WrapUnWrapETH'
 import { Button, Flex, Spinner } from '@chakra-ui/react';
+import { SwapAmountProvider } from './context/SwapAmountContext';
 
 const App: React.FC = () => {
   const { isConnected, isConnecting } = useAccount();
@@ -34,7 +35,9 @@ const App: React.FC = () => {
     <>
     {
       isConnected ? (
-        <WrapUnwrapETH />
+        <SwapAmountProvider>
+          <WrapUnwrapETH />
+        </SwapAmountProvider>
       ) : (
         <Flex
         gap="5"
