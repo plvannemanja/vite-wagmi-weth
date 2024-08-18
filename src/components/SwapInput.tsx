@@ -29,7 +29,7 @@ const SwapInput: React.FC<SwapInputProps> = ({
                   <img src={wethImg} width={30} alt="WETH image"/>
               )
             }
-            <p style={{fontWeight: "bold", fontSize: "25px"}}>{tokenSymbol}</p>
+            <p className="tokenSymbol">{tokenSymbol}</p>
           </div>
           <p style={balanceStyle}>Balance: {tokenBalance.substring(0, 7)}</p>
         </div>
@@ -38,20 +38,24 @@ const SwapInput: React.FC<SwapInputProps> = ({
                 <Button onClick={() => setAmount(max || "0")}>Max</Button>
             )
         }
-        <Input
-            type="number"
-            placeholder="0.0"
-            fontSize="3xl"
-            value={amount}
-            onChange={(e) => setAmount(e.target.value)}
-            outline="none"
-            py="10"
-            isDisabled={current !== type}
-            border="none"
-            fontFamily="monospace"
-            _focus={{boxShadow: "none"}}
-            textAlign="right"
-        />
+        <div>
+          <Input
+              type="number"
+              placeholder="0.0"
+              fontSize="3xl"
+              value={amount}
+              onChange={(e) => setAmount(e.target.value)}
+              outline="none"
+              py="10"
+              isDisabled={current !== type}
+              border="none"
+              fontFamily="monospace"
+              _focus={{boxShadow: "none"}}
+              textAlign="right"
+          />
+          <p className="usdCalc">${amount ? amount.substring(0, 15): "0.0"}</p>
+        </div>
+
       </HStack>
   )
       ;

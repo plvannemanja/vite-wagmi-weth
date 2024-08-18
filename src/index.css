@@ -29,7 +29,10 @@
     align-items: start;
     justify-content: start;
   }
-
+  .tokenSymbol{
+    font-weight: bold;
+    font-size: 25px;
+  }
   .wrap-btn {
     z-index: 2;
     margin: -28px auto;
@@ -53,7 +56,11 @@
     /* background-color: #111; */
     border: 1px solid #f3f3f3;
     border-radius: 15px;
-    padding: 10px 20px;
+    padding: 10px 0;
+    margin-top: 24px;
+  }
+  .usdCalc{
+    float: right;
   }
   
   .swapCard {
