@@ -42,6 +42,6 @@ To run this project, you will need to add environment variables. rename the `.en
 - Error handling in web3 transaction
 
 ## Caution
-To direct test, add custom public tenderly virtual-net.
-RPC-URL: https://virtual.mainnet.rpc.tenderly.co/a0733880-e60d-4223-aa66-eb818ad51a13
-Please send gmail to me nemanjaplvanmeth@gmail.com to fund your account.
+> To direct test, add custom public tenderly virtual-net.
+> RPC-URL: https://virtual.mainnet.rpc.tenderly.co/a0733880-e60d-4223-aa66-eb818ad51a13
+> Please send gmail to me nemanjaplvanmeth@gmail.com to fund your account.
