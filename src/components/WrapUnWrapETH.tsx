@@ -3,12 +3,13 @@ import {
   Flex,
   Spinner,
 } from "@chakra-ui/react"
-import React, { useState } from "react"
-import { useAccount, useBalance, useWriteContract } from "wagmi"
+import React, { useEffect, useState } from "react"
+import { BaseError, useAccount, useBalance, useWriteContract } from "wagmi"
 import SwapInput from "./SwapInput";
 import Navbar from "./Navbar";
 import { useWaitForTransactionReceipt } from "wagmi";
 import { parseAbi, parseEther } from "viem";
+import { useBlockNumber } from "wagmi";
 
 const WETH_CONTRACT_ADDRESS = '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2';
 
@@ -16,10 +17,16 @@ const WrapUnwrapETH: React.FC = () => {
   const { address } = useAccount();
   const [amount, setAmount] = useState<string>("0");
   const [currentFrom, setCurrentFrom] = useState<string>("eth");
-  const { data: ethBalance } = useBalance({ address });
-  const { data: wethBalance } = useBalance({ address, token: WETH_CONTRACT_ADDRESS });
+  const { data: ethBalance, refetch: ethRefetch } = useBalance({ address });
+  const { data: wethBalance, refetch: wethRefetch } = useBalance({ address, token: WETH_CONTRACT_ADDRESS });
+  const { data: blockNumber } = useBlockNumber({ watch: true });
 
   const { data: hash, error, isPending, writeContract } = useWriteContract()
+
+  useEffect(() => {
+    ethRefetch();
+    wethRefetch();
+  }, [blockNumber]);
 
   const executeSwap = async () => {
     if (currentFrom === "eth") {
@@ -41,7 +48,7 @@ const WrapUnwrapETH: React.FC = () => {
 
   const { isLoading: isConfirming, isSuccess: isConfirmed } =
   useWaitForTransactionReceipt({
-    hash,
+    hash
   })
 
   return (
@@ -105,6 +112,11 @@ const WrapUnwrapETH: React.FC = () => {
       >
         {(isConfirming || isPending) ? <Spinner /> : "Confirm"}
       </Button>
+      {isConfirming && <div>Waiting for confirmation...</div>} 
+      {isConfirmed && <div>Transaction confirmed.</div>} 
+      {error && (
+        <div>Error: {(error as BaseError).shortMessage || error.message}</div>
+      )}
     </Flex>
   )
 }
