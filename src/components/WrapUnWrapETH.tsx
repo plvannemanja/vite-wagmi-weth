@@ -10,12 +10,13 @@ import Navbar from "./Navbar";
 import { useWaitForTransactionReceipt } from "wagmi";
 import { parseAbi, parseEther } from "viem";
 import { useBlockNumber } from "wagmi";
+import { useSwapAmount } from "../context/SwapAmountContext";
 
 const WETH_CONTRACT_ADDRESS = '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2';
 
 const WrapUnwrapETH: React.FC = () => {
   const { address } = useAccount();
-  const [amount, setAmount] = useState<string>("0");
+  const { amount } = useSwapAmount();
   const [currentFrom, setCurrentFrom] = useState<string>("eth");
   const { data: ethBalance, refetch: ethRefetch } = useBalance({ address });
   const { data: wethBalance, refetch: wethRefetch } = useBalance({ address, token: WETH_CONTRACT_ADDRESS });
