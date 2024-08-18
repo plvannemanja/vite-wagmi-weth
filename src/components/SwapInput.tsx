@@ -17,17 +17,18 @@ const SwapInput: React.FC<SwapInputProps> = ({
   return (
       <HStack w="full" bgColor="gray.100" rounded="2xl" px="5" py="3" className="swapInputContainer">
         <div className="tokenInfo">
+          {current === type ? <p>Pay with</p> : <p>Receive</p>}
           <div>
             {
               type === "eth" ? (
-                  <img src={ethImg} width={18} alt="ETH image"/>
+                  <img src={ethImg} width={30} alt="ETH image"/>
               ) : (
-                  <img src={wethImg} width={18} alt="WETH image"/>
+                  <img src={wethImg} width={30} alt="WETH image"/>
               )
             }
-            <p>{tokenSymbol}</p>
+            <p style={{fontWeight: "bold", fontSize: "25px"}}>{tokenSymbol}</p>
           </div>
-          <p>Balance: {tokenBalance}</p>
+          <p style={{color : "red"}}>Balance: {tokenBalance}</p>
         </div>
         {
             current === type && (
