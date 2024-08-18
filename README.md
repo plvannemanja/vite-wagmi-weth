@@ -33,9 +33,6 @@ npm run dev
 ## Environment Variables
 
 To run this project, you will need to add environment variables. rename the `.env.example` file for all the environment variables required to `.env` file.
-VITE_WC_PROJECT_ID=
-VITE_WC_TENDERLY_ADMIN_RPC_URL=
-VITE_WC_TENDERLY_PUBLIC_RPC_URL=
 
 ## Project description
 - Vite for lightweight
@@ -43,3 +40,8 @@ VITE_WC_TENDERLY_PUBLIC_RPC_URL=
 - ChakraUI for seamless component
 - web3modal for interactive wallect connect
 - Error handling in web3 transaction
+
+## Caution
+To direct test, add custom public tenderly virtual-net.
+RPC-URL: https://virtual.mainnet.rpc.tenderly.co/a0733880-e60d-4223-aa66-eb818ad51a13
+Please send gmail to me nemanjaplvanmeth@gmail.com to fund your account.
