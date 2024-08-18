@@ -14,6 +14,9 @@ const SwapInput: React.FC<SwapInputProps> = ({
                                                max
                                              }) => {
   const {amount, setAmount} = useSwapAmount();
+  const balanceStyle = {
+    color: current === type ? 'red' : ''
+  };
   return (
       <HStack w="full" bgColor="gray.100" rounded="2xl" px="5" py="3" className="swapInputContainer">
         <div className="tokenInfo">
@@ -28,7 +31,7 @@ const SwapInput: React.FC<SwapInputProps> = ({
             }
             <p style={{fontWeight: "bold", fontSize: "25px"}}>{tokenSymbol}</p>
           </div>
-          <p style={{color : "red"}}>Balance: {tokenBalance}</p>
+          <p style={balanceStyle}>Balance: {tokenBalance.substring(0, 7)}</p>
         </div>
         {
             current === type && (

@@ -33,7 +33,12 @@
   .wrap-btn {
     z-index: 2;
     margin: -28px auto;
-    border: 2px solid rgb(216, 216, 216);
+    border: 2px solid white;
+    border-radius: 20px;
+    width: 33px;
+    height: 37px;
+    padding: 0px 0px;
+    background: #edf2f7;
   }
   
   .tokenInfo div {

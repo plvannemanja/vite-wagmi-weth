@@ -13,6 +13,7 @@ import { useBlockNumber } from "wagmi";
 import { useSwapAmount } from "../context/SwapAmountContext";
 import { config } from "../wagmi";
 import { waitForTransactionReceipt, WriteContractErrorType } from "wagmi/actions";
+import swapImg from '../assets/img/swap.png';
 
 const WETH_CONTRACT_ADDRESS = '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2';
 
@@ -114,40 +115,40 @@ const WrapUnwrapETH: React.FC = () => {
     >
       <Navbar />
       <Flex
-        direction={currentFrom === "eth" ? "column" : "column-reverse"}
-        gap="3"
+          direction={currentFrom === "eth" ? "column" : "column-reverse"}
+          gap="3"
       >
         <SwapInput
-          current={currentFrom}
-          type="eth"
-          max={ethBalance?.formatted}
-          tokenSymbol="ETH"
-          tokenBalance={ethBalance?.formatted || "0"}
+            current={currentFrom}
+            type="eth"
+            max={ethBalance?.formatted}
+            tokenSymbol="ETH"
+            tokenBalance={ethBalance?.formatted || "0"}
         />
 
         <Button
-          onClick={() =>
-            currentFrom === "eth"
-              ? setCurrentFrom("weth")
-              : setCurrentFrom("eth")
-          }
-          maxW="5"
-          mx="auto"
-          className="wrap-btn"
+            onClick={() =>
+                currentFrom === "eth"
+                    ? setCurrentFrom("weth")
+                    : setCurrentFrom("eth")
+            }
+            className="wrap-btn"
         >
-          ↓
+          <img src={swapImg} alt="ETH image" style={{height: "30px"}}/>
         </Button>
 
+
         <SwapInput
-          current={currentFrom}
-          type="weth"
-          max={wethBalance?.formatted}
-          tokenSymbol="WETH"
-          tokenBalance={wethBalance?.formatted || "0"}
-          />
+            current={currentFrom}
+            type="weth"
+            max={wethBalance?.formatted}
+            tokenSymbol="WETH"
+            tokenBalance={wethBalance?.formatted || "0"}
+        />
       </Flex>
       <Button
-        onClick={()=> {executeSwap()}}
+          onClick={() => {
+            executeSwap()}}
         py="7"
         fontSize="2xl"
         colorScheme="twitter"
