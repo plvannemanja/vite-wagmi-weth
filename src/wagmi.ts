@@ -1,6 +1,11 @@
-import { http, createConfig } from 'wagmi'
-import { createWeb3Modal } from '@web3modal/wagmi/react'
-import { coinbaseWallet, injected, walletConnect, metaMask } from 'wagmi/connectors'
+import { http, createConfig } from 'wagmi';
+import { createWeb3Modal } from '@web3modal/wagmi/react';
+import {
+  coinbaseWallet,
+  injected,
+  walletConnect,
+  metaMask,
+} from 'wagmi/connectors';
 import { virtual_mainnet } from './tenderly.config';
 
 const projectId = import.meta.env.VITE_WC_PROJECT_ID;
@@ -15,18 +20,18 @@ export const config = createConfig({
     walletConnect({ projectId }),
   ],
   transports: {
-    [virtual_mainnet.id]: http(tenderlyAdminRPCURL)
+    [virtual_mainnet.id]: http(tenderlyAdminRPCURL),
   },
-})
+});
 
 createWeb3Modal({
   wagmiConfig: config,
   projectId,
-  enableAnalytics: true // Optional - defaults to your Cloud configuration
-})
+  enableAnalytics: true, // Optional - defaults to your Cloud configuration
+});
 
 declare module 'wagmi' {
   interface Register {
-    config: typeof config
+    config: typeof config;
   }
 }

@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode } from 'react';
 
 export interface SwapAmountContextType {
   amount: string;
@@ -13,9 +13,9 @@ export interface ContextProviderProps {
 }
 
 export type SwapInputProps = {
-  type: "eth" | "weth";
+  type: 'eth' | 'weth';
   tokenSymbol?: string;
-  tokenBalance: string
+  tokenBalance: string;
   current: string;
   max?: string;
 };

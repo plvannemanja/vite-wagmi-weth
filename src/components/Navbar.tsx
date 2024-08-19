@@ -1,6 +1,5 @@
-import { Box, Flex, Text } from "@chakra-ui/react"
-import React from "react"
-
+import { Box, Flex, Text } from '@chakra-ui/react';
+import React from 'react';
 
 const Navbar: React.FC = () => {
   return (
@@ -12,7 +11,7 @@ const Navbar: React.FC = () => {
         justifyContent="space-between"
         alignItems="center"
         py="5"
-        px={{ base: "5", xl: "0" }}
+        px={{ base: '5', xl: '0' }}
       >
         <Text fontWeight="bold" fontSize="2xl">
           Case Study
@@ -21,6 +20,6 @@ const Navbar: React.FC = () => {
       </Flex>
     </Box>
   );
-}
+};
 
-export default Navbar
+export default Navbar;

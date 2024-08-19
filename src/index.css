@@ -20,7 +20,7 @@
     align-items: center;
     gap: 20px;
   }
-  
+
   .tokenInfo {
     display: flex;
     width: 100%;
@@ -29,7 +29,7 @@
     align-items: start;
     justify-content: start;
   }
-  .tokenSymbol{
+  .tokenSymbol {
     font-weight: bold;
     font-size: 25px;
   }
@@ -43,7 +43,7 @@
     padding: 0px 0px;
     background: #edf2f7;
   }
-  
+
   .tokenInfo div {
     display: flex;
     flex-direction: row;
@@ -51,7 +51,7 @@
     justify-content: center;
     gap: 15px;
   }
-  
+
   .swapInputContainer input {
     /* background-color: #111; */
     border: 1px solid #f3f3f3;
@@ -59,14 +59,14 @@
     padding: 10px 0;
     margin-top: 24px;
   }
-  .usdCalc{
+  .usdCalc {
     float: right;
   }
-  
+
   .swapCard {
     position: relative;
   }
-  
+
   .switchButton {
     margin-left: -110px;
     margin-top: -10px;
