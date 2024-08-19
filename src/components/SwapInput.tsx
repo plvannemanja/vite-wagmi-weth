@@ -13,10 +13,11 @@ const SwapInput: React.FC<SwapInputProps> = ({
                                                current,
                                                max
                                              }) => {
-  const {amount, setAmount} = useSwapAmount();
+  const { amount, setAmount, usdAmount } = useSwapAmount();
   const balanceStyle = {
     color: current === type ? 'red' : ''
   };
+
   return (
       <HStack w="full" bgColor="gray.100" rounded="2xl" px="5" py="3" className="swapInputContainer">
         <div className="tokenInfo">
@@ -53,7 +54,7 @@ const SwapInput: React.FC<SwapInputProps> = ({
               _focus={{boxShadow: "none"}}
               textAlign="right"
           />
-          <p className="usdCalc">${amount ? amount.substring(0, 15): "0.0"}</p>
+          <p className="usdCalc">${usdAmount ? Number(usdAmount).toFixed(3): "0.0"}</p>
         </div>
 
       </HStack>

@@ -3,6 +3,9 @@ import { ReactNode } from "react";
 export interface SwapAmountContextType {
   amount: string;
   setAmount: (amount: string) => void;
+  usdAmount: string;
+  oracleLoading: boolean;
+  oracleError: boolean;
 }
 
 export interface ContextProviderProps {

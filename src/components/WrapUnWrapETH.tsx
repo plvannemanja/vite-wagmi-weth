@@ -26,8 +26,18 @@ const WrapUnwrapETH: React.FC = () => {
   const {data: wethBalance, refetch: wethRefetch} = useBalance({address, token: WETH_CONTRACT_ADDRESS});
   const {data: blockNumber} = useBlockNumber({watch: true});
 
+  const { oracleError } = useSwapAmount();
+
   const [isConfirming, setIsConfirming] = useState<boolean>(false);
   const {isPending, writeContract, error} = useWriteContract()
+
+  if(oracleError)
+    toast({
+      title: "Oracle ETH Price",
+      description: "Fetch oracle price occurs error.",
+      status: "error",
+      position: "bottom-right",
+    });
 
   useEffect(() => {
     ethRefetch();
