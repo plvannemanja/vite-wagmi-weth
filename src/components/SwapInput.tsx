@@ -48,7 +48,7 @@ const SwapInput: React.FC<SwapInputProps> = ({
               onChange={(e) => setAmount(e.target.value)}
               outline="none"
               py="10"
-              isDisabled={current !== type}
+              // isDisabled={current !== type}
               border="none"
               fontFamily="monospace"
               _focus={{boxShadow: "none"}}
